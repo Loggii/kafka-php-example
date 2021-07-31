@@ -1,0 +1,8 @@
+FROM php:8-cli
+
+RUN apt-get update -y
+RUN apt-get install librdkafka-dev -y
+
+RUN pecl install rdkafka
+
+COPY ./config/php.ini /usr/local/etc/php/php.ini

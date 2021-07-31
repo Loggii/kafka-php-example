@@ -1,0 +1,17 @@
+{
+  "name": "vendor_name/php-multi",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "developer",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+    "ext-parallel": "*",
+    "ext-rdkafka": "*",
+    "ext-json": "*"
+  }
+}
