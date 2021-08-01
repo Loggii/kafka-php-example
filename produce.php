@@ -2,8 +2,6 @@
 
 $conf = new RdKafka\Conf();
 $conf->set('metadata.broker.list', 'kafka:9092');
-//produce exactly once and keep the original produce order
-$conf->set('enable.idempotence', 'true');
 
 
 $topicConf = new RdKafka\TopicConf();
@@ -19,6 +17,7 @@ $topic = $producer->newTopic("BigPool", $topicConf);
 
 for ($i = 0; $i < 10000; $i++) {
     $topic->produce(RD_KAFKA_PARTITION_UA, 0, json_encode(createData($i)));
+    echo 'Produced msg with ID: ' . $i . PHP_EOL;
     usleep(100000);
     $producer->poll(0);
 }

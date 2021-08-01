@@ -1,6 +1,7 @@
 <?php
 
 use RdKafka\Message;
+require_once __DIR__ . '/Color.php';
 
 $conf = new RdKafka\Conf();
 
