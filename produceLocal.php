@@ -2,9 +2,11 @@
 
 $conf = new RdKafka\Conf();
 $conf->set('metadata.broker.list', 'localhost:9093');
-
 //produce exactly once and keep the original produce order
 $conf->set('enable.idempotence', 'true');
+
+$topicConf = new RdKafka\TopicConf();
+$topicConf->set("request.required.acks", 'all');
 
 function createData(int $id) {
     $now = new DateTimeImmutable('now');
@@ -12,7 +14,7 @@ function createData(int $id) {
 }
 
 $producer = new RdKafka\Producer($conf);
-$topic = $producer->newTopic("BigPool");
+$topic = $producer->newTopic("BigPool", $topicConf);
 
 for ($i = 0; $i < 100000; $i++) {
     $topic->produce(RD_KAFKA_PARTITION_UA, 0, json_encode(createData($i)));

@@ -5,16 +5,9 @@ use RdKafka\Message;
 $conf = new RdKafka\Conf();
 
 $conf->set('group.id', 'SwitchOrderDispatcher');
-
-
 $conf->set('metadata.broker.list', 'kafka:9092');
-
 $conf->set('auto.offset.reset', 'latest');
-
-$conf = new RdKafka\Conf();
-$conf->set('group.id', 'SwitchOrderDispatcher');
-$conf->set('metadata.broker.list', 'localhost:9093');
-$conf->set('auto.offset.reset', 'latest');
+$conf->set('enable.auto.commit', 'false');
 
 
 $consumer = new RdKafka\KafkaConsumer($conf);
@@ -26,6 +19,7 @@ while (true) {
     switch ($message->err) {
         case RD_KAFKA_RESP_ERR_NO_ERROR:
             printConsumedData($message);
+            $consumer->commit();
             break;
         case RD_KAFKA_RESP_ERR__PARTITION_EOF:
             break;
