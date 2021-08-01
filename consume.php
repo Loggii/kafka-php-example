@@ -1,5 +1,7 @@
 <?php
 
+use RdKafka\Message;
+
 $conf = new RdKafka\Conf();
 
 $conf->set('group.id', 'SwitchOrderDispatcher');

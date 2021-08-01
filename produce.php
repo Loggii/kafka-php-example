@@ -6,14 +6,14 @@ $conf->set('metadata.broker.list', 'kafka:9092');
 $conf->set('enable.idempotence', 'true');
 
 function createData(int $id) {
-    $now = new DateTimeImmutable('now', 'Europe/Berlin');
-    return [ $id =>  $now->format('Y-m-d H:i:s:u')];
+    $now = new DateTimeImmutable('now');
+    return [ 'ID' => $id, 'timestamp' =>  $now->format('Y-m-d H:i:s:u')];
 }
 
 $producer = new RdKafka\Producer($conf);
 $topic = $producer->newTopic("BigPool");
 
-for ($i = 0; $i < 100000; $i++) {
+for ($i = 0; $i < 10000; $i++) {
     $topic->produce(RD_KAFKA_PARTITION_UA, 0, json_encode(createData($i)));
     usleep(100000);
     $producer->poll(0);
